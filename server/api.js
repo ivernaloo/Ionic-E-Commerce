@@ -44,7 +44,7 @@ var insertProduct = function (product, req, res) {
 };
 
 var server = http.createServer(function (req, res) {
-
+    console.log("request");
     // breaks down the incoming URL into its components
     var parsedUrl = url.parse(req.url, true);
     console.log("url", parsedUrl.pathname);
@@ -81,45 +81,7 @@ var server = http.createServer(function (req, res) {
             res.end('You shall not pass!');
     }
 });
-var server = http.createServer(function (req, res) {
 
-    // breaks down the incoming URL into its components
-    var parsedUrl = url.parse(req.url, true);
-
-    // determine a response based on the url
-    switch (parsedUrl.pathname) {
-        case '/api/products':
-            if (req.method == 'GET') {
-                // Find and return the product with the given id
-                if (parsedUrl.query.id) {
-                    findProductById(id, req, res)
-                }
-                // There is no id specified, return all products
-                else {
-                    findAllProducts(req, res);
-                }
-            }
-            else if (req.method == 'POST') {
-
-                //Extract the data stored in the POST body
-                var body = "";
-                req.on('data', function (dataChunk) {
-                    body += dataChunk;
-                });
-                req.on('end', function () {
-                    // Done pulling data from the POST body.
-                    // Turn it into JSON and proceed to store.
-                    var postJSON = JSON.parse(body);
-                    insertProduct(postJSON, req, res);
-                });
-            }
-            break;
-        default:
-            res.end('You shall not pass!');
-    }
-});
-
-
-server.listen(8080);
+server.listen(8081);
 
 console.log("Up, running and ready for action!");
